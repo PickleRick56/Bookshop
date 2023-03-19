@@ -50,6 +50,7 @@ table {
 /* HEADER */
 
 .contaner{
+    background-color: white;
     position: fixed;
     top:0;
    width: 100%;
@@ -127,4 +128,16 @@ text-decoration: none;
 
 .image_slider{
 margin-top: 116px;
+}
+
+/* BOOKS */
+.cards{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.card{
+    display: flex;
+    width: 424px;
+    border:1px double blue;
 }
