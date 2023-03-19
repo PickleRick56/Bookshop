@@ -70,9 +70,18 @@ dots.addEventListener("click", directSelection, false);
   
               <div class="author">${data.items[i].volumeInfo.authors}</div>
               <div class="title">${data.items[i].volumeInfo.title}</div>
-              <div class="ratingsCount">${
+
+              ${
                 data.items[i].volumeInfo.ratingsCount
-              } &#9734;</div>
+                  ? `<div class="ratingsCount">${data.items[i].volumeInfo.ratingsCount} &#9734;</div>`
+                  : ` <div class="ratingsCount"> </div>`
+              }
+
+             
+
+
+
+
               <div class="review">${
                 data.items[i].volumeInfo.description.length > 155
                   ? data.items[i].volumeInfo.description.slice(0, 155) + "..."
@@ -98,9 +107,12 @@ dots.addEventListener("click", directSelection, false);
   
               <div class="author">${data.items[i].volumeInfo.authors}</div>
               <div class="title">${data.items[i].volumeInfo.title}</div>
-              <div class="ratingsCount">${
+              ${
                 data.items[i].volumeInfo.ratingsCount
-              } &#9734;</div>
+                  ? `<div class="ratingsCount">${data.items[i].volumeInfo.ratingsCount} &#9734;</div>`
+                  : ` <div class="ratingsCount"> </div>`
+              }
+
               <div class="review">${
                 data.items[i].volumeInfo.description.length > 155
                   ? data.items[i].volumeInfo.description.slice(0, 155) + "..."
