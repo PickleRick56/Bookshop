@@ -1,0 +1,19 @@
+
+
+.slider{
+  
+    width: 400px;
+    height: 200px;
+    background-size: cover;
+}
+
+.dots> div{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: #EFEEF6;
+    border-radius: 50%;
+}
+.dots>div:first-child{background-color: #9E98DC}
+.dots{display: inline;}
+button{display: inline;}

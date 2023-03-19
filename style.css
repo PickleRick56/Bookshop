@@ -1,0 +1,143 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.contaner_1440{
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+/* HEADER */
+
+.contaner{
+    background-color: white;
+    position: fixed;
+    top:0;
+   width: 100%;
+    margin: 0 auto;
+}
+
+header{
+  height: 116px;
+    width: 77%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.lable{
+    font-family: Montserrat;
+font-size: 24px;
+font-weight: 700;
+line-height: 29px;
+letter-spacing: 0em;
+text-align: left;
+color: rgba(28, 42, 57, 1);
+
+}
+
+
+.header_ul{display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    font-family: Montserrat;
+font-size: 10px;
+font-weight: 700;
+line-height: 12px;
+letter-spacing: 0em;
+text-align: left;
+color: rgba(92, 106, 121, 1);
+}
+
+.header_ul{
+    font-size: 10px;
+font-weight: 700;
+line-height: 12px;
+letter-spacing: 0em;
+text-align: left;
+text-decoration: none;
+color: rgba(92, 106, 121, 1);
+
+}
+
+.header_ul_active{
+    font-family: Montserrat;
+font-size: 10px;
+font-weight: 900;
+line-height: 12px;
+letter-spacing: 0em;
+text-align: left;
+color:black ;
+text-decoration: none;
+}
+
+.profile_section{
+    display: flex;
+    gap:40px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+
+
+/* SLIDER */
+
+
+.image_slider{
+margin-top: 116px;
+}
+
+/* BOOKS */
+.cards{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.card{
+    display: flex;
+    width: 424px;
+    border:1px double blue;
+}
