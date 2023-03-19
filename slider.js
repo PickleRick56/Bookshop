@@ -61,8 +61,7 @@ dots.addEventListener("click", directSelection, false);
       console.log(data);
 
       for (let i = 0; i < data.items.length; i++) {
-        if (!data.items[i].saleInfo.retailPrice) {
-          cards.innerHTML += `   <div class="card">
+        cards.innerHTML += `   <div class="card">
           <img class="card_cover" src="${
             data.items[i].volumeInfo.imageLinks.thumbnail
           }" alt="">
@@ -77,70 +76,24 @@ dots.addEventListener("click", directSelection, false);
                   : ` <div class="ratingsCount"> </div>`
               }
 
-             
-
-
-
-
               <div class="review">${
                 data.items[i].volumeInfo.description.length > 155
                   ? data.items[i].volumeInfo.description.slice(0, 155) + "..."
                   : data.items[i].volumeInfo.description
               }</div>
 
-              <div class="price">${data.items[i].saleInfo.saleability.replace(
-                /_/g,
-                " "
-              )}</div>
-  
-              
-              
-          </div>
-  
-      </div>`;
-        } else {
-          cards.innerHTML += `   <div class="card">
-          <img class="card_cover" src="${
-            data.items[i].volumeInfo.imageLinks.thumbnail
-          }" alt="">
-          <div class="description">
-  
-              <div class="author">${data.items[i].volumeInfo.authors}</div>
-              <div class="title">${data.items[i].volumeInfo.title}</div>
               ${
-                data.items[i].volumeInfo.ratingsCount
-                  ? `<div class="ratingsCount">${data.items[i].volumeInfo.ratingsCount} &#9734;</div>`
-                  : ` <div class="ratingsCount"> </div>`
+                data.items[i].saleInfo.retailPrice
+                  ? `<div class="price">${data.items[i].saleInfo.retailPrice.amount}${data.items[i].saleInfo.retailPrice.currencyCode}</div>`
+                  : `<div class="price">
+                 ${data.items[i].saleInfo.saleability.replace(/_/g, " ")}
+               </div>`
               }
-
-              <div class="review">${
-                data.items[i].volumeInfo.description.length > 155
-                  ? data.items[i].volumeInfo.description.slice(0, 155) + "..."
-                  : data.items[i].volumeInfo.description
-              }</div>
   
-              
-              <div class="price">${data.items[i].saleInfo.retailPrice.amount}${
-            data.items[i].saleInfo.retailPrice.currencyCode
-          }</div>
           </div>
   
       </div>`;
-        }
       }
-
-      // cards.innerHTML += `   <div class="card">
-      //     <img class="card_cover" src="${data.items[4].volumeInfo.imageLinks.thumbnail}" alt="">
-      //     <div class="description">
-
-      //         <div class="author">${data.items[4].volumeInfo.authors}</div>
-      //         <div class="title">${data.items[4].volumeInfo.title}</div>
-      //         <div class="ratingsCount">${data.items[4].volumeInfo.ratingsCount} &#9734;</div>
-      //         <div class="review">${data.items[4].volumeInfo.description}</div>
-      //         <div class="price">${data.items[4].saleInfo.retailPrice.amount}  ${data.items[4].saleInfo.retailPrice.currencyCode}</div>
-      //     </div>
-
-      // </div>`;
     })
 
     .catch(() => {
