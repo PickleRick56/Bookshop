@@ -52,7 +52,7 @@ dots.addEventListener("click", directSelection, false);
 // BOOKS
 (function () {
   fetch(
-    'https://www.googleapis.com/books/v1/volumes?q="subject:Humor"&key=AIzaSyARaQbqJaGTu2k41QqIQHeM5DIhY69brqs&printType=books&startIndex=0&maxResults=6&langRestrict=en'
+    'https://www.googleapis.com/books/v1/volumes?q="subject:Fiction"&key=AIzaSyARaQbqJaGTu2k41QqIQHeM5DIhY69brqs&printType=books&startIndex=0&maxResults=6&langRestrict=en'
   )
     .then((response) => {
       return response.json();
@@ -72,7 +72,9 @@ dots.addEventListener("click", directSelection, false);
 
               ${
                 data.items[i].volumeInfo.ratingsCount
-                  ? `<div class="ratingsCount">${data.items[i].volumeInfo.ratingsCount} &#9734;</div>`
+                  ? `<div class="ratingsCount">${star(
+                      data.items[i].volumeInfo.ratingsCount
+                    )} </div>`
                   : ` <div class="ratingsCount"> </div>`
               }
 
@@ -100,3 +102,12 @@ dots.addEventListener("click", directSelection, false);
       console.log("error");
     });
 })();
+
+function star(num) {
+  let starsCount = "";
+  for (let i = 0; i < num; i++) {
+    starsCount += "&#9734;";
+  }
+  console.log(num);
+  return starsCount;
+}
