@@ -80,8 +80,10 @@ function bookRequest(category, startPositon) {
                     )} </div>`
                   : ` <div class="ratingsCount"> </div>`
               }
-
-              ${reviewer(data.items[i].volumeInfo.description)}
+              <div class="review">${reviewer(
+                data.items[i].volumeInfo.description
+              )} </div>
+         
 
               ${
                 data.items[i].saleInfo.retailPrice
@@ -90,6 +92,8 @@ function bookRequest(category, startPositon) {
                  ${data.items[i].saleInfo.saleability.replace(/_/g, " ")}
                </div>`
               }
+
+              <button class="buy">buy now</button>
   
           </div>
   
@@ -122,12 +126,11 @@ function cleanBeforeRequest() {
 }
 
 function catalogClassToDefault(e) {
-  console.log(e);
   let liList = document.querySelectorAll(".catalog_ul_a");
   for (let key of liList) {
     key.className = "catalog_ul_a";
   }
-  e.className = "catalog_ul_a_active";
+  e.className = "catalog_ul_a catalog_ul_a_active";
 }
 
 function star(num) {
@@ -141,12 +144,12 @@ function star(num) {
 
 function reviewer(description) {
   if (description) {
-    if (description.length > 155) {
-      return `${description.slice(0, 155)}` + "...";
+    if (description.length > 99) {
+      return `${description.slice(0, 96)}` + "...";
     } else {
       return description;
     }
   } else {
-    return "no description";
+    return `no description`;
   }
 }
