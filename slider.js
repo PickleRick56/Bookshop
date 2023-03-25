@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   sliderStarter();
+  bookRequest("Architecture");
 });
 
 function sliderStarter() {
@@ -12,6 +13,7 @@ let slider = document.querySelector(".slider");
 let dots = document.querySelector(".dots");
 let allDots = dots.children;
 let cards = document.querySelector(".cards");
+let catalog = document.querySelector(".catalog_ul");
 
 const imageCollection = [
   "img/banner0.png",
@@ -50,9 +52,9 @@ function directSelection(evt) {
 dots.addEventListener("click", directSelection, false);
 
 // BOOKS
-(function () {
+function bookRequest(category) {
   fetch(
-    'https://www.googleapis.com/books/v1/volumes?q="subject:Crafts&Hobbies"&key=AIzaSyARaQbqJaGTu2k41QqIQHeM5DIhY69brqs&printType=books&startIndex=0&maxResults=6&langRestrict=en'
+    `https://www.googleapis.com/books/v1/volumes?q="subject:${category}"&key=AIzaSyARaQbqJaGTu2k41QqIQHeM5DIhY69brqs&printType=books&startIndex=0&maxResults=6&langRestrict=en`
   )
     .then((response) => {
       return response.json();
@@ -97,7 +99,19 @@ dots.addEventListener("click", directSelection, false);
     .catch(() => {
       console.log("error");
     });
-})();
+}
+
+catalog.addEventListener("click", (e) => {
+  cleanBeforeRequest();
+  let category = e.target.closest("a");
+  category = category.innerText.replace(/\s/g, "");
+  console.log(category);
+  bookRequest(category);
+});
+
+function cleanBeforeRequest() {
+  cards.innerHTML = "";
+}
 
 function star(num) {
   let starsCount = "";
