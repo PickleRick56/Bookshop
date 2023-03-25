@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   sliderStarter();
-  bookRequest("Architecture");
+  bookRequest("Architecture", 0);
 });
 
 function sliderStarter() {
@@ -14,6 +14,7 @@ let dots = document.querySelector(".dots");
 let allDots = dots.children;
 let cards = document.querySelector(".cards");
 let catalog = document.querySelector(".catalog_ul");
+let loadMoreButton = document.querySelector(".load_more");
 
 const imageCollection = [
   "img/banner0.png",
@@ -52,9 +53,9 @@ function directSelection(evt) {
 dots.addEventListener("click", directSelection, false);
 
 // BOOKS
-function bookRequest(category) {
+function bookRequest(category, startPositon) {
   fetch(
-    `https://www.googleapis.com/books/v1/volumes?q="subject:${category}"&key=AIzaSyARaQbqJaGTu2k41QqIQHeM5DIhY69brqs&printType=books&startIndex=0&maxResults=6&langRestrict=en`
+    `https://www.googleapis.com/books/v1/volumes?q="subject:${category}"&key=AIzaSyARaQbqJaGTu2k41QqIQHeM5DIhY69brqs&printType=books&startIndex=${startPositon}&maxResults=6&langRestrict=en`
   )
     .then((response) => {
       return response.json();
@@ -104,13 +105,29 @@ function bookRequest(category) {
 catalog.addEventListener("click", (e) => {
   cleanBeforeRequest();
   let category = e.target.closest("a");
-  category = category.innerText.replace(/\s/g, "");
-  console.log(category);
-  bookRequest(category);
-});
+  catalogClassToDefault(category);
 
+  category = category.innerText.replace(/\s/g, "");
+
+  bookRequest(category, 0);
+});
+loadMoreButton.addEventListener("click", () => {
+  let activeCategory = document.querySelector(".catalog_ul_a_active").innerText;
+  let cardNumber = document.querySelectorAll(".card");
+  console.log(cardNumber.length);
+  bookRequest(activeCategory, cardNumber.length);
+});
 function cleanBeforeRequest() {
   cards.innerHTML = "";
+}
+
+function catalogClassToDefault(e) {
+  console.log(e);
+  let liList = document.querySelectorAll(".catalog_ul_a");
+  for (let key of liList) {
+    key.className = "catalog_ul_a";
+  }
+  e.className = "catalog_ul_a_active";
 }
 
 function star(num) {
@@ -118,7 +135,7 @@ function star(num) {
   for (let i = 0; i < num; i++) {
     starsCount += "&#9734;";
   }
-  console.log(num);
+
   return starsCount;
 }
 
