@@ -78,11 +78,7 @@ dots.addEventListener("click", directSelection, false);
                   : ` <div class="ratingsCount"> </div>`
               }
 
-              <div class="review">${
-                data.items[i].volumeInfo.description.length > 155
-                  ? data.items[i].volumeInfo.description.slice(0, 155) + "..."
-                  : data.items[i].volumeInfo.description
-              }</div>
+              ${reviewer(data.items[i].volumeInfo.description)}
 
               ${
                 data.items[i].saleInfo.retailPrice
@@ -110,4 +106,14 @@ function star(num) {
   }
   console.log(num);
   return starsCount;
+}
+
+function reviewer(description) {
+  if (description) {
+    if (description.length > 155) {
+      return `${description.slice(0, 155)}` + "...";
+    }
+  } else {
+    return "no description";
+  }
 }
