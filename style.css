@@ -141,3 +141,45 @@ margin-top: 116px;
     width: 424px;
     border:1px double blue;
 }
+
+/* CATALOG */
+
+.catalog{
+    background: #EFEEF6;
+    height: 710px;
+    width: 416px;
+ 
+    border-radius: 0px;
+    
+}
+
+.catalog_ul{
+    padding-top: 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:23px;
+}
+
+.catalog_ul_a{
+    font-family: Montserrat;
+font-size: 12px;
+font-weight: 500;
+line-height: 15px;
+letter-spacing: 0em;
+text-align: left;
+text-decoration: none;
+color: #5C6A79;
+}
+
+
+.catalog_ul_a_active{
+    font-family: Montserrat;
+font-size: 16px;
+font-weight: 700;
+line-height: 20px;
+letter-spacing: 0em;
+text-align: left;
+color: #1C2A39;
+text-decoration: none;
+}
