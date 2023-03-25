@@ -52,7 +52,7 @@ dots.addEventListener("click", directSelection, false);
 // BOOKS
 (function () {
   fetch(
-    'https://www.googleapis.com/books/v1/volumes?q="subject:Fiction"&key=AIzaSyARaQbqJaGTu2k41QqIQHeM5DIhY69brqs&printType=books&startIndex=0&maxResults=6&langRestrict=en'
+    'https://www.googleapis.com/books/v1/volumes?q="subject:Crafts&Hobbies"&key=AIzaSyARaQbqJaGTu2k41QqIQHeM5DIhY69brqs&printType=books&startIndex=0&maxResults=6&langRestrict=en'
   )
     .then((response) => {
       return response.json();
@@ -112,6 +112,8 @@ function reviewer(description) {
   if (description) {
     if (description.length > 155) {
       return `${description.slice(0, 155)}` + "...";
+    } else {
+      return description;
     }
   } else {
     return "no description";
