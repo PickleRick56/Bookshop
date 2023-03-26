@@ -22,16 +22,16 @@ const imageCollection = [
   "img/banner2.png",
 ];
 
-slider.style.backgroundImage = "url('img/banner0.png')";
+slider.src = `img/banner0.png`;
 
 function forward() {
   position += 1;
 
   if (position > imageCollection.length - 1) {
     position = 0;
-    slider.style.backgroundImage = `url(${imageCollection[position]})`;
+    slider.src = `${imageCollection[position]}`;
   } else {
-    slider.style.backgroundImage = `url(${imageCollection[position]})`;
+    slider.src = `${imageCollection[position]}`;
   }
   for (let key of allDots) {
     key.style.backgroundColor = "#EFEEF6";
