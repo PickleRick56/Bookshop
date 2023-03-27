@@ -15,6 +15,7 @@ let allDots = dots.children;
 let cards = document.querySelector(".cards");
 let catalog = document.querySelector(".catalog_ul");
 let loadMoreButton = document.querySelector(".load_more");
+let cart = document.querySelector(".cart");
 
 const imageCollection = [
   "img/banner0.png",
@@ -93,7 +94,7 @@ function bookRequest(category, startPositon) {
                </div>`
               }
 
-              <button class="buy">buy now</button>
+              <button class="buy" onclick="purchase(this);" >buy now</button>
   
           </div>
   
@@ -118,7 +119,7 @@ catalog.addEventListener("click", (e) => {
 loadMoreButton.addEventListener("click", () => {
   let activeCategory = document.querySelector(".catalog_ul_a_active").innerText;
   let cardNumber = document.querySelectorAll(".card");
-  console.log(cardNumber.length);
+
   bookRequest(activeCategory, cardNumber.length);
 });
 function cleanBeforeRequest() {
@@ -136,7 +137,15 @@ function catalogClassToDefault(e) {
 function star(num) {
   let starsCount = "";
   for (let i = 0; i < num; i++) {
-    starsCount += "&#9734;";
+    starsCount += `<svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 0L7.80568 3.5147L11.7063 4.1459L8.92165 6.9493L9.52671 10.8541L6 9.072L2.47329 10.8541L3.07835 6.9493L0.293661 4.1459L4.19432 3.5147L6 0Z" fill="#F2C94C"/>
+    </svg>`;
+  }
+
+  for (let i = 0; i < 5 - num; i++) {
+    starsCount += `<svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 0L7.80568 3.5147L11.7063 4.1459L8.92165 6.9493L9.52671 10.8541L6 9.072L2.47329 10.8541L3.07835 6.9493L0.293661 4.1459L4.19432 3.5147L6 0Z" fill="#EEEDF5"/>
+    </svg>`;
   }
 
   return starsCount;
@@ -151,5 +160,13 @@ function reviewer(description) {
     }
   } else {
     return `no description`;
+  }
+}
+
+// CART
+function purchase(button) {
+  if (button.innerText === "BUY NOW") {
+    button.innerText = "in the cart";
+    cart.dataset.styleType = Number(cart.dataset.styleType) + 1;
   }
 }
