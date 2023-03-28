@@ -1,123 +1,187 @@
-*{
-    box-sizing: border-box;
+document.addEventListener("DOMContentLoaded", () => {
+  sliderStarter();
+  bookRequest("Architecture", 0);
+  document.querySelector(":root").style.setProperty("--hidden", "hidden");
+  if (localStorage.getItem("cartCount") === null) {
+    console.log(localStorage.getItem("cartCount"));
+    cart.dataset.styleType = "0";
+  } else {
+    cart.dataset.styleType = localStorage.getItem("cartCount");
+    document.querySelector(":root").style.setProperty("--hidden", "visible");
+  }
+});
+
+function sliderStarter() {
+  setInterval(() => forward(), 5000);
 }
 
+let position = 0;
 
-.slider {
-    width: 100%;
-  height: auto;
-    z-index:-1;
-    position: relative;
-    /* width: 1120px;
-    height: 702px; */
-    margin: 0 auto;
-    background-size: cover;
+let slider = document.querySelector(".slider");
+let dots = document.querySelector(".dots");
+let allDots = dots.children;
+let cards = document.querySelector(".cards");
+let catalog = document.querySelector(".catalog_ul");
+let loadMoreButton = document.querySelector(".load_more");
+let cart = document.querySelector(".cart");
+
+const imageCollection = [
+  "img/banner0.png",
+  "img/banner1.png",
+  "img/banner2.png",
+];
+
+slider.src = `img/banner0.png`;
+
+function forward() {
+  position += 1;
+
+  if (position > imageCollection.length - 1) {
+    position = 0;
+    slider.src = `${imageCollection[position]}`;
+  } else {
+    slider.src = `${imageCollection[position]}`;
+  }
+  for (let key of allDots) {
+    key.style.backgroundColor = "#EFEEF6";
+  }
+  document.querySelector(`.dot${position}`).style.backgroundColor = "#9E98DC";
 }
 
-.dots{
-
-    display: block;
-    max-width: 100px;
-    margin: 20px auto 0 auto;
+function directSelection(evt) {
+  let index = evt.target.className;
+  index = index.slice(-1);
+  position = index;
+  for (let key of allDots) {
+    key.style.backgroundColor = "#EFEEF6";
+  }
+  slider.style.backgroundImage = `url(${imageCollection[position]})`;
+  document.querySelector(`.dot${position}`).style.backgroundColor = "#9E98DC";
 }
 
-.dots>div {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    background-color: #EFEEF6;
-    border-radius: 50%;
+dots.addEventListener("click", directSelection, false);
+
+// BOOKS
+function bookRequest(category, startPositon) {
+  fetch(
+    `https://www.googleapis.com/books/v1/volumes?q="subject:${category}"&key=AIzaSyARaQbqJaGTu2k41QqIQHeM5DIhY69brqs&printType=books&startIndex=${startPositon}&maxResults=6&langRestrict=en`
+  )
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+
+      for (let i = 0; i < data.items.length; i++) {
+        cards.innerHTML += `   <div class="card">
+          <img class="card_cover" src="${
+            data.items[i].volumeInfo.imageLinks.thumbnail
+          }" alt="">
+          <div class="description">
+  
+              <div class="author">${data.items[i].volumeInfo.authors}</div>
+              <div class="title">${data.items[i].volumeInfo.title}</div>
+
+              ${
+                data.items[i].volumeInfo.ratingsCount
+                  ? `<div class="ratingsCount">${star(
+                      data.items[i].volumeInfo.ratingsCount
+                    )} </div>`
+                  : ` <div class="ratingsCount"> </div>`
+              }
+              <div class="review">${reviewer(
+                data.items[i].volumeInfo.description
+              )} </div>
+         
+
+              ${
+                data.items[i].saleInfo.retailPrice
+                  ? `<div class="price">${data.items[i].saleInfo.retailPrice.amount}${data.items[i].saleInfo.retailPrice.currencyCode}</div>`
+                  : `<div class="price">
+                 ${data.items[i].saleInfo.saleability.replace(/_/g, " ")}
+               </div>`
+              }
+
+              <button class="buy" onclick="purchase(this);" >buy now</button>
+  
+          </div>
+  
+      </div>`;
+      }
+    })
+
+    .catch(() => {
+      console.log("error");
+    });
 }
 
-.dots>div:first-child {
-    background-color: #9E98DC
+catalog.addEventListener("click", (e) => {
+  cleanBeforeRequest();
+  let category = e.target.closest("a");
+  catalogClassToDefault(category);
+
+  category = category.innerText.replace(/\s/g, "");
+
+  bookRequest(category, 0);
+});
+loadMoreButton.addEventListener("click", () => {
+  let activeCategory = document.querySelector(".catalog_ul_a_active").innerText;
+  let cardNumber = document.querySelectorAll(".card");
+
+  bookRequest(activeCategory, cardNumber.length);
+});
+function cleanBeforeRequest() {
+  cards.innerHTML = "";
 }
 
-
-
-button {
-    display: inline;
+function catalogClassToDefault(e) {
+  let liList = document.querySelectorAll(".catalog_ul_a");
+  for (let key of liList) {
+    key.className = "catalog_ul_a";
+  }
+  e.className = "catalog_ul_a catalog_ul_a_active";
 }
 
+function star(num) {
+  let starsCount = "";
+  for (let i = 0; i < num; i++) {
+    starsCount += `<svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 0L7.80568 3.5147L11.7063 4.1459L8.92165 6.9493L9.52671 10.8541L6 9.072L2.47329 10.8541L3.07835 6.9493L0.293661 4.1459L4.19432 3.5147L6 0Z" fill="#F2C94C"/>
+    </svg>`;
+  }
 
-.chage_oldBooks{
-    cursor: pointer;
-    display: flex;
-    align-items: end;
-    padding-bottom: 36px;
-    padding-left: 21px;
-    position: absolute;
-    top:79px;
-    right: -100px;
-    height: 204px;
-width: 149px;
+  for (let i = 0; i < 5 - num; i++) {
+    starsCount += `<svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 0L7.80568 3.5147L11.7063 4.1459L8.92165 6.9493L9.52671 10.8541L6 9.072L2.47329 10.8541L3.07835 6.9493L0.293661 4.1459L4.19432 3.5147L6 0Z" fill="#EEEDF5"/>
+    </svg>`;
+  }
 
-border-radius: 0px;
-background: #9E98DC;
-box-shadow: 0px 24px 36px 0px #35315447;
-font-family: Montserrat;
-font-size: 18px;
-font-weight: 700;
-line-height: 22px;
-letter-spacing: 0em;
-text-align: left;
-
-text-transform: uppercase;
+  return starsCount;
 }
 
-.chage_oldBooks_p{
-    height: 66px;
-    width: 109px;
-   
-    
-}
-
-.top_100Books{
-    cursor: pointer;
-    display: flex;
-    align-items: end;
-    padding-bottom: 36px;
-    padding-left: 21px;
-    position: absolute;
-    bottom:79px;
-    right: -182px;
-    height: 273px;
-width: 137px;
-
-box-shadow: 0px 24px 36px 0px #35315447;
-
-
-border-radius: 0px;
-background: #FF8FE6;
-
-font-family: Montserrat;
-font-size: 18px;
-font-weight: 700;
-line-height: 22px;
-letter-spacing: 0em;
-text-align: left;
-text-transform: uppercase;
-
-}
-
-.top_100Books_p{
-    
-    height: 88px;
-    width: 69px;
-text-transform: uppercase;
-}
-
-
-/* SLIDER */
-
-
-.image_slider{
-    margin-top: 105px;
-    margin-bottom: 135px;
+function reviewer(description) {
+  if (description) {
+    if (description.length > 99) {
+      return `${description.slice(0, 96)}` + "...";
+    } else {
+      return description;
     }
-    
-    .for_slider {
-        margin: 0 auto;
-        position: relative;
-        max-width: 1120px;
-    }
+  } else {
+    return `no description`;
+  }
+}
+
+// CART
+function purchase(button) {
+  if (button.innerText === "BUY NOW") {
+    button.innerText = "in the cart";
+    cart.dataset.styleType = Number(cart.dataset.styleType) + 1;
+    localStorage.setItem("cartCount", `${cart.dataset.styleType}`);
+    document.querySelector(":root").style.setProperty("--hidden", "visible");
+  } else if (button.innerText === "IN THE CART") {
+    button.innerText = "BUY NOW";
+    cart.dataset.styleType = Number(cart.dataset.styleType) - 1;
+    localStorage.setItem("cartCount", `${cart.dataset.styleType}`);
+    document.querySelector(":root").style.setProperty("--hidden", "visible");
+  }
+}
