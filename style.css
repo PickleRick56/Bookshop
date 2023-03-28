@@ -130,7 +130,7 @@ text-decoration: none;
 }
 
 .cart::after{
-    /* display: none; */
+    visibility: var(--hidden);
     content: attr(data-style-type);
     position: relative;
     top: 2px;
@@ -150,6 +150,7 @@ text-decoration: none;
 
 :root {
     --color: #FF353A;
+    --hidden: hidden;
   }
 
 
@@ -231,6 +232,7 @@ margin-top: 16px;
 
 
 .buy{
+    cursor: pointer;
     width: 176px;
 height: 45px;
 border: 1px solid #4C3DB2;
