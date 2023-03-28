@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
   sliderStarter();
   bookRequest("Architecture", 0);
+  document.querySelector(":root").style.setProperty("--hidden", "hidden");
+  if (localStorage.getItem("cartCount") === null) {
+    console.log(localStorage.getItem("cartCount"));
+    cart.dataset.styleType = "0";
+  } else {
+    cart.dataset.styleType = localStorage.getItem("cartCount");
+    document.querySelector(":root").style.setProperty("--hidden", "visible");
+  }
 });
 
 function sliderStarter() {
@@ -168,5 +176,12 @@ function purchase(button) {
   if (button.innerText === "BUY NOW") {
     button.innerText = "in the cart";
     cart.dataset.styleType = Number(cart.dataset.styleType) + 1;
+    localStorage.setItem("cartCount", `${cart.dataset.styleType}`);
+    document.querySelector(":root").style.setProperty("--hidden", "visible");
+  } else if (button.innerText === "IN THE CART") {
+    button.innerText = "BUY NOW";
+    cart.dataset.styleType = Number(cart.dataset.styleType) - 1;
+    localStorage.setItem("cartCount", `${cart.dataset.styleType}`);
+    document.querySelector(":root").style.setProperty("--hidden", "visible");
   }
 }
