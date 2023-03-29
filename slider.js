@@ -34,7 +34,7 @@ const imageCollection = [
 slider.src = `img/banner0.png`;
 
 function forward() {
-  position += 1;
+  position = Number(position) + 1;
 
   if (position > imageCollection.length - 1) {
     position = 0;
@@ -55,7 +55,7 @@ function directSelection(evt) {
   for (let key of allDots) {
     key.style.backgroundColor = "#EFEEF6";
   }
-  slider.style.backgroundImage = `url(${imageCollection[position]})`;
+  slider.src = `${imageCollection[position]}`;
   document.querySelector(`.dot${position}`).style.backgroundColor = "#9E98DC";
 }
 
@@ -182,6 +182,15 @@ function purchase(button) {
     button.innerText = "BUY NOW";
     cart.dataset.styleType = Number(cart.dataset.styleType) - 1;
     localStorage.setItem("cartCount", `${cart.dataset.styleType}`);
+    // document.querySelector(":root").style.setProperty("--hidden", "visible");
+    checkZero();
+  }
+}
+
+function checkZero() {
+  if (localStorage.getItem("cartCount") > 0) {
     document.querySelector(":root").style.setProperty("--hidden", "visible");
+  } else {
+    document.querySelector(":root").style.setProperty("--hidden", "hidden");
   }
 }
